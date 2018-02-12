@@ -1,22 +1,25 @@
 package com.uphyca.stetho_realm;
 
 import android.database.sqlite.SQLiteException;
+
 import com.facebook.stetho.inspector.helper.ChromePeerManager;
 import com.facebook.stetho.inspector.helper.PeerRegistrationListener;
 import com.facebook.stetho.inspector.jsonrpc.JsonRpcPeer;
-import io.realm.RealmConfiguration;
-import io.realm.exceptions.RealmError;
-import io.realm.internal.OsRealmConfig;
-import io.realm.internal.OsSharedRealm;
-import io.realm.internal.Table;
 
-import javax.annotation.Nullable;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.annotation.Nullable;
+
+import io.realm.RealmConfiguration;
+import io.realm.exceptions.RealmError;
+import io.realm.internal.OsRealmConfig;
+import io.realm.internal.OsSharedRealm;
+import io.realm.internal.Table;
 
 
 public class RealmPeerManager extends ChromePeerManager {
@@ -133,7 +136,7 @@ public class RealmPeerManager extends ChromePeerManager {
         final File databaseFile = new File(databaseId).getAbsoluteFile();
         builder.directory(databaseFile.getParentFile());
         builder.name(databaseFile.getName());
-        builder.readOnly();
+        builder.deleteRealmIfMigrationNeeded();
         if (durability == OsRealmConfig.Durability.MEM_ONLY) {
             builder.inMemory();
         }
