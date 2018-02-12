@@ -133,7 +133,7 @@ public class RealmPeerManager extends ChromePeerManager {
         final File databaseFile = new File(databaseId).getAbsoluteFile();
         builder.directory(databaseFile.getParentFile());
         builder.name(databaseFile.getName());
-
+        builder.readOnly();
         if (durability == OsRealmConfig.Durability.MEM_ONLY) {
             builder.inMemory();
         }
