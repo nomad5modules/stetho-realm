@@ -15,6 +15,7 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Nullable;
 
+import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.exceptions.RealmError;
 import io.realm.internal.OsRealmConfig;
@@ -136,7 +137,10 @@ public class RealmPeerManager extends ChromePeerManager {
         final File databaseFile = new File(databaseId).getAbsoluteFile();
         builder.directory(databaseFile.getParentFile());
         builder.name(databaseFile.getName());
-        builder.deleteRealmIfMigrationNeeded();
+        final RealmConfiguration cfg = Realm.getDefaultConfiguration();
+        if(cfg != null && cfg.shouldDeleteRealmIfMigrationNeeded()) {
+            builder.deleteRealmIfMigrationNeeded();
+        }
         if (durability == OsRealmConfig.Durability.MEM_ONLY) {
             builder.inMemory();
         }
